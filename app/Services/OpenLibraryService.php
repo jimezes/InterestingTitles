@@ -107,4 +107,52 @@ class OpenLibraryService
             return null;
         }
     }
+
+    public function searchBooksByTitleInCategory(string $title, string $category): ?array
+    {
+        try {
+            $response = $this->client->get("subjects/{$category}.json");
+            $data = json_decode($response->getBody(), true);
+            $works = $data["works"] ?? [];
+    
+            $searchWords = preg_split('/\s+/', strtolower($title)); // Split the input title into words
+            $matchedTitles = [];
+    
+            foreach ($works as $work) {
+                if (!isset($work['title'], $work['subject'])) {
+                    continue;
+                }
+    
+                // Check if the subject list includes the category
+                $subjects = strtolower(implode(" ", $work["subject"]));
+                if (!str_contains($subjects, strtolower($category))) {
+                    continue;
+                }
+    
+                // Now check if the book title contains at least one word from the search
+                $bookTitle = strtolower($work['title']);
+                foreach ($searchWords as $word) {
+                    \Log::debug("check ".$word." in ".$bookTitle);
+                    if (str_contains($bookTitle, $word)) {
+                        $authorNames = [];
+                        foreach($work['authors'] as $authorData){
+                            $authorNames[] = $authorData['name'];
+                        }
+                        $authors = implode(",",$authorNames);
+                        $matchedTitles[] = ["title"=>$work['title'],"authors"=>$authors];
+                        break; // Only need one match
+                    }
+                }
+            }
+    
+            \Log::debug("Filtered Titles: " . json_encode($matchedTitles));
+            return $matchedTitles;
+    
+        } catch (RequestException $e) {
+            \Log::error("Failed to fetch books in category {$category}: " . $e->getMessage());
+            return [];
+        }
+    }
+    
+    
 }

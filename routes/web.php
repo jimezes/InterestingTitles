@@ -27,6 +27,7 @@ Route::get('/',function(){
 });
 
 Route::get('/search/{category}', [SearchBooksController::class, 'search'])->name('search.books');
+Route::post('/search/{category}/{title}', [SearchBooksController::class, 'do_search'])->name('search');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
