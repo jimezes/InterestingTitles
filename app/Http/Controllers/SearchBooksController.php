@@ -15,7 +15,7 @@ class SearchBooksController extends Controller
     public function do_search(Request $request,$category,$title){
         \Log::debug("will search in category: ".$category." for title = ".$title);
         $split = explode(" ",$title);
-        //$title = implode("+",$split);
+        $title = implode("+",$split);
         $service = new OpenLibraryService();
         $results = $service->searchBooksByTitleInCategory($title,$category);
         \Log::debug($results);

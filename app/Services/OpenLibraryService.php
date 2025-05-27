@@ -111,41 +111,16 @@ class OpenLibraryService
     public function searchBooksByTitleInCategory(string $title, string $category): ?array
     {
         try {
-            $response = $this->client->get("subjects/{$category}.json");
+            
+            $response = $this->client->get("https://openlibrary.org/search.json?title=".$title."&subject=".$category);
             $data = json_decode($response->getBody(), true);
-            $works = $data["works"] ?? [];
-    
-            $searchWords = preg_split('/\s+/', strtolower($title)); // Split the input title into words
+            $works = $data["docs"] ?? [];
+            // \Log::debug("works: ");
+            // \Log::debug($works);
             $matchedTitles = [];
-    
-            foreach ($works as $work) {
-                if (!isset($work['title'], $work['subject'])) {
-                    continue;
-                }
-    
-                // Check if the subject list includes the category
-                $subjects = strtolower(implode(" ", $work["subject"]));
-                if (!str_contains($subjects, strtolower($category))) {
-                    continue;
-                }
-    
-                // Now check if the book title contains at least one word from the search
-                $bookTitle = strtolower($work['title']);
-                foreach ($searchWords as $word) {
-                    \Log::debug("check ".$word." in ".$bookTitle);
-                    if (str_contains($bookTitle, $word)) {
-                        $authorNames = [];
-                        foreach($work['authors'] as $authorData){
-                            $authorNames[] = $authorData['name'];
-                        }
-                        $authors = implode(",",$authorNames);
-                        $matchedTitles[] = ["title"=>$work['title'],"authors"=>$authors];
-                        break; // Only need one match
-                    }
-                }
+            foreach($works as $work){
+                $matchedTitles[] = ["title"=>$work['title'],"authors"=>$work['author_name'][0]];
             }
-    
-            \Log::debug("Filtered Titles: " . json_encode($matchedTitles));
             return $matchedTitles;
     
         } catch (RequestException $e) {
