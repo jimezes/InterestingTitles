@@ -37,7 +37,7 @@ composer install
 npm install
 create a MySQL database and give it a name of your preference
 create a .env file and add set with your local URL and properties:
-
+---
 APP_NAME="Interesting Titles"
 APP_URL=http://InterestingTitles.test
 
