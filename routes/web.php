@@ -11,10 +11,12 @@ use App\Http\Controllers\FavoritesController;
 
 
 
-Route::get('/',function(){
+
+Route::get('/', function () { 
     $categories = Category::all();
-    return Inertia::render('Categories',['categories'=>$categories]);
+    return Inertia::render('Categories', ['categories' => $categories]);
 });
+
 
 Route::get('/search/{category}', [SearchBooksController::class, 'search'])->name('search.books');
 Route::post('/search/{category}/{title}', [SearchBooksController::class, 'do_search'])->name('search');

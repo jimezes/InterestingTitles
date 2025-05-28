@@ -23,10 +23,17 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Vite::prefetch(concurrency: 3);
-        $categoriesCount = Category::count();
-        if($categoriesCount == 0){//fetch categories from API if not fetched and save them to database
-             $service = new OpenLibraryService();
-             $service->fetchCategories();
+        //fetch the categories here, just the first time
+        if (Category::count() === 0) {
+            try {
+                set_time_limit(0); // No time limit
+
+                $service = new OpenLibraryService();
+                $service->initializeCategories();
+            } catch (\Throwable $e) {
+                \Log::error('Category fetch failed: ' . $e->getMessage());
+                abort(500, 'Could not fetch categories.');
+            }
         }
     }
 }

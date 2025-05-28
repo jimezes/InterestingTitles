@@ -26,7 +26,11 @@ class Development extends Command
      */
     public function handle()
     {
-        $service = new OpenLibraryService();
-        $service->fetchCategories();
+        $categories = \App\Models\Category::all();
+        foreach($categories as $category){
+            $category->delete();
+        }
+        // $service = new OpenLibraryService();
+        // $service->fetchCategories();
     }
 }

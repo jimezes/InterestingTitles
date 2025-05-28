@@ -47,6 +47,17 @@ class OpenLibraryService
     }
 
     /**
+     * Initialize static categories
+     */
+    public function initializeCategories(){
+          foreach ($this->popularCategories as $subject) {
+            $category = new Category();
+            $category->name = $subject;
+            $category->save();
+          }
+    }
+
+    /**
      * Fetch popular categories (subjects)
      *
      * @return array
