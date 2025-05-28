@@ -3,6 +3,8 @@
 **InterestingTitles** is a web application built with **Laravel 12** and using **Inertia.js** with **Vue 3** that lets users search, categorize, and save books they find interesting by querying the [Open Library API](https://openlibrary.org/dev/docs/api/). It offers a clean interface to discover new books and organize your favorites.
 This project is configured to run locally using [Laravel Herd](https://laravel.com/docs/12.x/herd), a simple local development environment for Laravel.
 
+![Alt text](books.png)
+
 ---
 
 ## Features
