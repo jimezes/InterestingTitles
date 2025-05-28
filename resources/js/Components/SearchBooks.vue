@@ -103,25 +103,30 @@
   }
 
 
-.spinner-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-}
+  .spinner-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+  }
 
-.spinner {
-  width: 36px;
-  height: 36px;
-  border: 3px solid #dcdcdc;
-  border-top: 3px solid #888;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
+  .spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid #dcdcdc;
+    border-top: 3px solid #888;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .results{
+    max-height:550px;
+    overflow-y:auto;
+  }
 
 </style>
   

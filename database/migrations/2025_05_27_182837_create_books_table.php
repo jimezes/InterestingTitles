@@ -14,10 +14,6 @@ return new class extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('openlibrary_key')->unique(); 
-            $table->string('isbn')->nullable();
-            $table->date('published_date')->nullable();
-            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
