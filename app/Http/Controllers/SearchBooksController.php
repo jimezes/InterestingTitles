@@ -8,9 +8,9 @@ use App\Services\OpenLibraryService;
 
 class SearchBooksController extends Controller
 {
-    public function search(Request $request,$category){
-        return Inertia::render('SearchBooks',['category'=>$category]);
-    }
+    // public function search(Request $request,$category){
+    //     return Inertia::render('SearchBooks',['category'=>$category]);
+    // }
 
     public function do_search(Request $request,$category,$title){
         \Log::debug("will search in category: ".$category." for title = ".$title);

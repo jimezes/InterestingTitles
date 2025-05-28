@@ -15,8 +15,7 @@ export default {
   },
   methods:{
     goToSearch() {
-      const url = route('search.books', { category: this.category.name });
-      window.location.href = url;
+      this.$emit('category-selected',JSON.stringify(this.category))
     },
   }
 };

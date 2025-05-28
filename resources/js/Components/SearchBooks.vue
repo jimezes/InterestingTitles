@@ -8,7 +8,10 @@
         placeholder="Type a book title..."
         class="search-input"
       />
-  
+      
+      <div v-if="loading" class="spinner-wrapper">
+        <div class="spinner"></div>
+      </div>
       <div class="results">
         <Book
           v-for="book in books"
@@ -36,6 +39,7 @@
         searchTerm: '',
         books: [],
         timeoutId: null,
+        loading:false
       };
     },
     methods: {
@@ -50,6 +54,7 @@
       },
   
       async searchBooks() {
+            this.loading = true;
             try {
                 const response = await axios.post(
                 route('search', { category: this.category, title: this.searchTerm }),
@@ -68,6 +73,9 @@
                 if (error.response && error.response.data) {
                 console.error('Server responded with:', error.response.data);
                 }
+            }
+            finally {
+              this.loading = false;
             }
       }
 
@@ -93,5 +101,27 @@
     display: flex;
     flex-direction: column;
   }
-  </style>
+
+
+.spinner-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #dcdcdc;
+  border-top: 3px solid #888;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+</style>
   
