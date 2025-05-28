@@ -37,7 +37,7 @@ composer install
 npm install
 create a MySQL database and give it a name of your preference
 create a .env file and add set with your local URL and properties:
----
+```
 APP_NAME="Interesting Titles"
 APP_URL=http://InterestingTitles.test
 
@@ -48,16 +48,17 @@ DB_DATABASE=your_database_name
 DB_USERNAME=your_mysql_username
 DB_PASSWORD=your_mysql_password
 
+```bash
 run php artisan key:generate
 run php artisan migrate
-
+```
 Open Laravel Herd.
 
 Add the InterestingTitles project directory to your Herd sites.
 
 Herd will automatically configure a local domain such as http://InterestingTitles.test.
-
+```bash
 npm run dev
-
+```
 Visit http://InterestingTitles.test in your browser.
 
